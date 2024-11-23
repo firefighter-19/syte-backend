@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: syte-test-db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: testDB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      target: development
+    container_name: syte-test-backend
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: test
+      DATABASE_PASSWORD: test
+      DATABASE_NAME: testDB
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: my_custom_network
