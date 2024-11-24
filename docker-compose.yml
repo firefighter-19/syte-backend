@@ -3,7 +3,7 @@ services:
     image: postgres:15
     container_name: syte-test-db
     ports:
-      - '5432:5432'
+      - "5432:5432"
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
@@ -13,14 +13,14 @@ services:
 
   backend:
     build:
-      context: .
+      context: ./backend
       target: development
     container_name: syte-test-backend
     volumes:
-      - .:/app
+      - ./backend:/app
       - /app/node_modules
     ports:
-      - '3000:3000'
+      - "3000:3000"
     depends_on:
       - postgres
     environment:
@@ -29,6 +29,21 @@ services:
       DATABASE_USER: test
       DATABASE_PASSWORD: test
       DATABASE_NAME: testDB
+
+  frontend:
+    build:
+      context: ./front
+    container_name: syte-test-frontend
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+      - "5173:5173"
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

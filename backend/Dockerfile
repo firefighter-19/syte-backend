@@ -16,5 +16,4 @@ WORKDIR /app
 COPY . .
 RUN npm run build
 EXPOSE 3000
-RUN npm run typeorm:run-migrations
 CMD ["sh", "-c", "npm run typeorm:run-migrations && npm run start:prod"]
