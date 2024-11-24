@@ -1,5 +1,16 @@
+import { IsNotEmpty, IsString } from 'class-validator';
 import { GetLocaleDto } from '../../locale/dto/locale.dto';
 import { CatalogEntity } from '../catalog.entity';
+
+export class GetAllCatalogDto {
+  @IsString({
+    message: 'User id must be a string',
+  })
+  @IsNotEmpty({
+    message: 'User id is required',
+  })
+  user_id: string;
+}
 
 export type GetCatalogDto = {
   fashion: Catalog[];

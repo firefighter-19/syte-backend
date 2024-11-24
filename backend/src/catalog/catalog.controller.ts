@@ -14,13 +14,14 @@ import {
   DeleteCatalogDto,
   DeleteCatalogManyDto,
 } from './dto/delete-catalog.dto';
+import { GetAllCatalogDto } from './dto/get-catalog.dto';
 
 @Controller('catalog')
 export class CatalogController {
   constructor(private readonly catalogService: CatalogService) {}
 
   @Get('/all')
-  getAllCatalog(@Query() { user_id }: { user_id: string }) {
+  getAllCatalog(@Query() { user_id }: GetAllCatalogDto) {
     return this.catalogService.getAllCatalogs(user_id);
   }
 
