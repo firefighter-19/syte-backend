@@ -35,7 +35,10 @@ export class UserEntity {
   })
   updated_at: Date;
 
-  @ManyToMany(() => CatalogEntity, (catalog) => catalog.user, { cascade: true })
+  @ManyToMany(() => CatalogEntity, (catalog) => catalog.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   @JoinTable({ name: 'user_catalog' })
   catalog: CatalogEntity[];
 }

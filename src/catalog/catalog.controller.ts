@@ -3,8 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  Patch,
   Post,
-  Put,
   Query,
 } from '@nestjs/common';
 import { CatalogService } from './catalog.service';
@@ -29,13 +29,13 @@ export class CatalogController {
     return this.catalogService.addCatalog(catalog);
   }
 
-  @Put('/update')
+  @Patch('/update')
   updateCatalogById(@Body() catalog: UpdateCatalogDto) {
     return this.catalogService.updateCatalog(catalog);
   }
 
   @Delete('/delete')
-  deleteCatalogById(@Body() variables: DeleteCatalogDto) {
+  deleteCatalogById(@Query() variables: DeleteCatalogDto) {
     return this.catalogService.deleteCatalogById(variables);
   }
 

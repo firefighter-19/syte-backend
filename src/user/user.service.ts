@@ -17,7 +17,7 @@ export class UserService {
     return await this.userRepository.save(createUser);
   }
   async getAllUsers(): Promise<UserEntity[]> {
-    return this.userRepository
+    return await this.userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.catalog', 'catalog')
       .getMany();
