@@ -1,7 +1,4 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { UserEntity } from './user/user.entity';
-import { CatalogEntity } from './catalog/catalog.entity';
-import { LocaleEntity } from './locale/locale.entity';
 
 export const config: DataSourceOptions = {
   type: 'postgres',
@@ -11,9 +8,11 @@ export const config: DataSourceOptions = {
   password: 'test',
   database: 'testDB',
   synchronize: false,
-  migrations: [__dirname + '/migrations/*.ts'],
-  entities: [UserEntity, CatalogEntity, LocaleEntity],
-  migrationsRun: false,
+  migrations: [__dirname + '/migrations/*.js'],
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  migrationsRun: true,
+  metadataTableName: 'migrations_metadata',
+  logging: ['query', 'error', 'migration'],
 };
 
 const AppDataSource = new DataSource(config);

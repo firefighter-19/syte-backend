@@ -17,7 +17,7 @@ export class LocaleEntity {
   @Column({ type: 'varchar', length: 255, nullable: false })
   language!: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   code!: string;
 
   @ManyToMany(() => CatalogEntity, (catalog) => catalog.locales)
