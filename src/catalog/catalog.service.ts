@@ -14,8 +14,8 @@ import {
   DeleteCatalogDto,
   DeleteCatalogManyDto,
 } from './dto/delete-catalog.dto';
-import { LocaleEntity } from 'src/locale/locale.entity';
-import { UserEntity } from 'src/user/user.entity';
+import { LocaleEntity } from '../locale/locale.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Injectable()
 export class CatalogService {

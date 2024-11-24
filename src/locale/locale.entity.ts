@@ -1,4 +1,3 @@
-import { CatalogEntity } from 'src/catalog/catalog.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +7,7 @@ import {
   DeleteDateColumn,
   ManyToMany,
 } from 'typeorm';
+import { CatalogEntity } from '../catalog/catalog.entity';
 
 @Entity('locale')
 export class LocaleEntity {

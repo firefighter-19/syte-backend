@@ -1,4 +1,3 @@
-import { CatalogEntity } from 'src/catalog/catalog.entity';
 import {
   Column,
   CreateDateColumn,
@@ -9,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CatalogEntity } from '../catalog/catalog.entity';
 
 @Entity('user')
 export class UserEntity {

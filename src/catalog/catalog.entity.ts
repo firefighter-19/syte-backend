@@ -1,5 +1,3 @@
-import { LocaleEntity } from 'src/locale/locale.entity';
-import { UserEntity } from 'src/user/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,6 +9,8 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
+import { LocaleEntity } from '../locale/locale.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Entity('catalog')
 export class CatalogEntity {

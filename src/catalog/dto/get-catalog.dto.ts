@@ -1,4 +1,4 @@
-import { GetLocaleDto } from 'src/locale/dto/locale.dto';
+import { GetLocaleDto } from '../../locale/dto/locale.dto';
 import { CatalogEntity } from '../catalog.entity';
 
 export type GetCatalogDto = {

@@ -9,11 +9,12 @@ COPY . .
 RUN npm install --only=development
 RUN npm install -g nodemon
 EXPOSE 3000
-CMD ["npm", "run", "start:dev"]
+CMD ["sh", "-c", "npm run start:dev"]
 
 FROM base AS production
 WORKDIR /app
 COPY . .
 RUN npm run build
 EXPOSE 3000
-CMD ["npm", "run", "start:prod"]
+RUN npm run typeorm:run-migrations
+CMD ["sh", "-c", "npm run typeorm:run-migrations && npm run start:prod"]

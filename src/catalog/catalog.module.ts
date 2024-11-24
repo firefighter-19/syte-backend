@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { CatalogController } from './catalog.controller';
 import { CatalogService } from './catalog.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from 'src/user/user.entity';
-import { LocaleEntity } from 'src/locale/locale.entity';
 import { CatalogEntity } from './catalog.entity';
+import { LocaleEntity } from '../locale/locale.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Module({
   imports: [
