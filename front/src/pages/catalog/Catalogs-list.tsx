@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FC, useEffect, useState } from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
@@ -7,7 +6,7 @@ import {
   useDeleteCatalogMutation,
 } from "../../shared/api/category/category";
 import { CatalogResponse } from "../../shared/api/category/catalog.response";
-import { useSearchParams } from "react-router";
+import { NavLink, useSearchParams } from "react-router";
 import { CatalogTableList } from "./catalogTable/Catalog-table";
 
 const onChange = (key: string) => {
@@ -31,7 +30,7 @@ export const CatalogsList: FC = () => {
     home: [],
   });
 
-  const { data, error, isLoading } = useCatalogQuery({
+  const { data, error, isLoading, refetch } = useCatalogQuery({
     user_id: searchParams.get("user_id") || "",
   });
 
@@ -59,17 +58,26 @@ export const CatalogsList: FC = () => {
     }
   }, [response]);
 
+  useEffect(() => {
+    refetch();
+  }, [refetch, searchParams]);
+
   return (
     <>
       {isLoading && !error && data === undefined
         ? "User is loaded, loading catalogs"
         : null}
       {data ? (
-        <Tabs
-          defaultActiveKey="1"
-          items={convertToTabs(tabs, deleteCatalog)}
-          onChange={onChange}
-        />
+        <>
+          <Tabs
+            defaultActiveKey="1"
+            items={convertToTabs(tabs, deleteCatalog)}
+            onChange={onChange}
+          />
+          <NavLink to={`/create?user_id=${searchParams.get("user_id")}`}>
+            Create table
+          </NavLink>
+        </>
       ) : null}
       <div>{error ? "Sorry, something went wrong" : null}</div>
     </>
@@ -93,7 +101,6 @@ function convertToTabs(
       children: (
         <CatalogTableList
           deleteCatalog={deleteCatalog}
-          //@ts-ignore
           data={data[key as keyof CatalogResponse]}
         ></CatalogTableList>
       ),

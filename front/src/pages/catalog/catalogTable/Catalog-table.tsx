@@ -2,7 +2,7 @@ import React from "react";
 import { Space, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import { Vertical } from "../../../shared/api/category/catalog.response";
-import { useSearchParams } from "react-router";
+import { NavLink, useSearchParams } from "react-router";
 
 export const CatalogTableList: React.FC<{
   data: Vertical[];
@@ -74,7 +74,12 @@ export const CatalogTableList: React.FC<{
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>Change {record.name}</a>
+          <NavLink
+            to={`/create?user_id=${searchParams.get("user_id")}`}
+            state={record}
+          >
+            Change {record.name}
+          </NavLink>
           <a
             onClick={() =>
               deleteCatalog({
@@ -107,7 +112,9 @@ export const CatalogTableList: React.FC<{
           dataSource={mappedData}
         />
       ) : (
-        <div>Create table</div>
+        <NavLink to={`/create?user_id=${searchParams.get("user_id")}`}>
+          Create table
+        </NavLink>
       )}
     </>
   );

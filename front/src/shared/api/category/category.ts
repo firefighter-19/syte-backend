@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { CatalogResponse } from "./catalog.response";
+import { CatalogCreateRequest, CatalogUpdateRequest } from "./catalog.request";
 
 export const catalogsApi = createApi({
   reducerPath: "catalogsApi",
@@ -10,6 +11,20 @@ export const catalogsApi = createApi({
         url: "catalog/all/",
         method: "GET",
         params: { user_id },
+      }),
+    }),
+    createCatalog: builder.mutation<CatalogResponse, CatalogCreateRequest>({
+      query: (variables) => ({
+        url: "catalog/create",
+        method: "POST",
+        body: variables,
+      }),
+    }),
+    updateCatalog: builder.mutation<CatalogResponse, CatalogUpdateRequest>({
+      query: (variables) => ({
+        url: "catalog/update",
+        method: "PATCH",
+        body: variables,
       }),
     }),
     deleteCatalog: builder.mutation<
@@ -25,4 +40,9 @@ export const catalogsApi = createApi({
   }),
 });
 
-export const { useCatalogQuery, useDeleteCatalogMutation } = catalogsApi;
+export const {
+  useCatalogQuery,
+  useDeleteCatalogMutation,
+  useCreateCatalogMutation,
+  useUpdateCatalogMutation,
+} = catalogsApi;
