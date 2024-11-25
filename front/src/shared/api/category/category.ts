@@ -37,6 +37,16 @@ export const catalogsApi = createApi({
         params: { catalog_id, user_id },
       }),
     }),
+    deleteCatalogMany: builder.mutation<
+      CatalogResponse,
+      { catalog_ids: string[]; user_id: string }
+    >({
+      query: ({ catalog_ids, user_id }) => ({
+        url: "catalog/bulk",
+        method: "DELETE",
+        body: { catalog_ids, user_id },
+      }),
+    }),
   }),
 });
 
@@ -45,4 +55,5 @@ export const {
   useDeleteCatalogMutation,
   useCreateCatalogMutation,
   useUpdateCatalogMutation,
+  useDeleteCatalogManyMutation,
 } = catalogsApi;

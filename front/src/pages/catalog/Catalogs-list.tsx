@@ -1,8 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { Tabs } from "antd";
+import { Button, Tabs } from "antd";
 import type { TabsProps } from "antd";
 import {
   useCatalogQuery,
+  useDeleteCatalogManyMutation,
   useDeleteCatalogMutation,
 } from "../../shared/api/category/category";
 import { CatalogResponse } from "../../shared/api/category/catalog.response";
@@ -30,11 +31,24 @@ export const CatalogsList: FC = () => {
     home: [],
   });
 
+  const [catalogsToDelete, setCatalogsToDelete] = useState<string[]>([]);
+
   const { data, error, isLoading, refetch } = useCatalogQuery({
     user_id: searchParams.get("user_id") || "",
   });
 
+  const handleDelete = (catalog_id: string) => {
+    setCatalogsToDelete((prevState) => {
+      if (prevState.includes(catalog_id)) {
+        return prevState.filter((id) => id !== catalog_id);
+      }
+      return [...prevState, catalog_id];
+    });
+  };
+
   const [deleteCatalog, { data: response }] = useDeleteCatalogMutation();
+  const [deleteCatalogMany, { data: respondedMany }] =
+    useDeleteCatalogManyMutation();
 
   useEffect(() => {
     if (data) {
@@ -60,7 +74,7 @@ export const CatalogsList: FC = () => {
 
   useEffect(() => {
     refetch();
-  }, [refetch, searchParams]);
+  }, [refetch, searchParams, respondedMany]);
 
   return (
     <>
@@ -71,12 +85,24 @@ export const CatalogsList: FC = () => {
         <>
           <Tabs
             defaultActiveKey="1"
-            items={convertToTabs(tabs, deleteCatalog)}
+            items={convertToTabs(tabs, handleDelete, deleteCatalog)}
             onChange={onChange}
           />
           <NavLink to={`/create?user_id=${searchParams.get("user_id")}`}>
             Create table
           </NavLink>
+          {catalogsToDelete.length ? (
+            <Button
+              onClick={() =>
+                deleteCatalogMany({
+                  catalog_ids: catalogsToDelete,
+                  user_id: searchParams.get("user_id") || "",
+                })
+              }
+            >
+              DELETE ALL
+            </Button>
+          ) : null}
         </>
       ) : null}
       <div>{error ? "Sorry, something went wrong" : null}</div>
@@ -86,6 +112,7 @@ export const CatalogsList: FC = () => {
 
 function convertToTabs(
   data: CatalogResponse,
+  handleDelete: (id: string) => void,
   deleteCatalog: ({
     user_id,
     catalog_id,
@@ -101,6 +128,7 @@ function convertToTabs(
       children: (
         <CatalogTableList
           deleteCatalog={deleteCatalog}
+          handleDelete={handleDelete}
           data={data[key as keyof CatalogResponse]}
         ></CatalogTableList>
       ),

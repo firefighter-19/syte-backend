@@ -1,11 +1,12 @@
 import React from "react";
-import { Space, Table, Tag } from "antd";
+import { Checkbox, Space, Table, Tag } from "antd";
 import type { TableProps } from "antd";
 import { Vertical } from "../../../shared/api/category/catalog.response";
 import { NavLink, useSearchParams } from "react-router";
 
 export const CatalogTableList: React.FC<{
   data: Vertical[];
+  handleDelete: (id: string) => void;
   deleteCatalog: ({
     user_id,
     catalog_id,
@@ -16,8 +17,10 @@ export const CatalogTableList: React.FC<{
 }> = ({
   data,
   deleteCatalog,
+  handleDelete,
 }: {
   data: Vertical[];
+  handleDelete: (id: string) => void;
   deleteCatalog: ({
     user_id,
     catalog_id,
@@ -90,6 +93,9 @@ export const CatalogTableList: React.FC<{
           >
             Delete
           </a>
+          <Checkbox onChange={() => handleDelete(record.id)}>
+            Choose to delete
+          </Checkbox>
         </Space>
       ),
     },

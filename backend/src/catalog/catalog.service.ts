@@ -104,12 +104,12 @@ export class CatalogService {
       .getMany();
 
     const languagesExist = languages.filter((locale) =>
-      catalog.locales_ids.includes(locale.id),
+      catalog.locales_ids?.includes(locale.id),
     );
 
-    if (!languagesExist.length) {
+    if (!languagesExist.length && catalog?.locales_ids?.length) {
       throw new NotFoundException(
-        `Languages with ids ${catalog.locales_ids.join(', ')} not found`,
+        `Languages with ids ${catalog.locales_ids?.join(', ')} not found`,
       );
     }
 
@@ -141,12 +141,6 @@ export class CatalogService {
     });
 
     return mapToCatalog(value);
-
-    // const updatedCatalog = await this.catalogRepository.findOne({
-    //   where: { id: catalog.catalog_id, user: { id: catalog.user_id } },
-    //   relations: ['user', 'locale'],
-    // });
-    // return mapToCatalog(updatedCatalog);
   }
 
   async deleteCatalogById({

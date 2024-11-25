@@ -58,7 +58,6 @@ export const CatalogCreate: React.FC = () => {
   const [form] = Form.useForm();
 
   if (location?.state) {
-    console.log("location.state ===========>: ", location.state);
     form.setFieldsValue({
       name: location?.state.name,
       is_primary: location?.state.is_primary,
