@@ -14,7 +14,7 @@ docker compose up --build
 
 ## Data base diagram
 
-![DataBase Diagram]('./db-diagram.png')
+![DataBase Diagram](['./db-diagram.png'](https://github.com/firefighter-19/syte-test/blob/master/db-diagram.png?raw=true))
 
 ### All DTOs is available in backend folder
 
