@@ -17,3 +17,8 @@ docker compose up --build
 ![DataBase Diagram]('./db-diagram.png')
 
 ### All DTOs is available in backend folder
+
+
+## PS (what to improve):
+
+```I've used the wrond way of updating the is_primary 'column' for the catalog. It's better way to use primaryAt with date, then we have an 'rollback' opportinty if it needs.```
